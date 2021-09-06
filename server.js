@@ -11,6 +11,9 @@ app.use(cors());
 
 // products의 경로로 get 요청이 왔을 때 아래 함수가 진행됨
 app.get("/products", (req, res) => {
+  // 쿼리 처리방식 알아보기
+  const query = req.query;
+  console.log("QUERY: ", query);
   // http와는 다르게 express에서는 send안에 객체 넣을 수 있음
   res.send({
     product: [
@@ -39,8 +42,21 @@ app.get("/products", (req, res) => {
   });
 });
 
+//  post요청을 통해서 body에 정보를 담을 수 있음
 app.post("/products", (req, res) => {
-  res.send("상품이 등록되었습니다.");
+  const body = req.body;
+  res.send({
+    //   body : body 이렇게 key랑 value가 똑같으면 그냥 body만 써줘도됨
+    body,
+  });
+});
+
+// 동적으로 id 데이터 처리
+app.get("/products/:id", (req, res) => {
+  const params = req.params;
+  const { id } = params;
+  // res.send(`id는 ${params.id}입니다`);
+  res.send(`id는 ${id}입니다`);
 });
 
 app.listen(port, () => {
